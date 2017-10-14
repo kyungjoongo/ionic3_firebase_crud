@@ -11,10 +11,8 @@ import {AngularFireModule} from 'angularfire2'
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import {HttpModule} from "@angular/http";
 import {FirebaseServiceProvider} from '../providers/firebase-service/firebase-service';
+
 import { DetailPage} from "../pages/detail/detail";
-import { AboutPage} from "../pages/about/about";
-
-
 
 var config = {
     apiKey: "AIzaSyDEzvhYyYPy2jRE-J2BweJKST22IKGEHzU",
@@ -31,9 +29,7 @@ var config = {
         MyApp,
         HomePage,
         ListPage,
-        DetailPage,
-        AboutPage
-
+        DetailPage
     ],
     imports: [
         BrowserModule,
@@ -49,8 +45,8 @@ var config = {
         MyApp,
         HomePage,
         ListPage,
-        DetailPage,
-        AboutPage
+        DetailPage
+
     ],
     providers: [
         StatusBar,

@@ -2,50 +2,59 @@ import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {AngularFireDatabase} from "angularfire2/database";
+import {LoadingController} from "ionic-angular";
 
-/*
-  Generated class for the FirebaseServiceProvider provider.
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class FirebaseServiceProvider {
 
-    constructor(public http: Http, public angularfiredatabase: AngularFireDatabase) {
+    constructor(public http: Http, public angularfiredatabase: AngularFireDatabase, public loadingController: LoadingController) {
+
+
     }
 
     item;
-
+    loadingImage: any;
 
     getShoppingItems() {
 
-        return this.angularfiredatabase.list('/shoppingItems/')
+        return this.angularfiredatabase.list('/shoppingItems/');
+
 
     }
 
     addItem(name) {
 
         this.item = {'value': name};
+        this.loadingImage = this.loadingController.create({content: '<ion-spinner></ion-spinner>'});
+        this.loadingImage.present();
+        this.angularfiredatabase.list('/shoppingItems/').push(this.item).then(() => {
 
-
-        this.angularfiredatabase.list('/shoppingItems/').push(this.item)
+            this.loadingImage.dismiss();
+        })
     }
 
     removeItem(id) {
+        this.loadingImage = this.loadingController.create({content: '<ion-spinner></ion-spinner>'});
+        this.loadingImage.present();
+        this.angularfiredatabase.list('/shoppingItems/').remove(id).then(() => {
+            this.loadingImage.dismiss();
 
 
-        this.angularfiredatabase.list('/shoppingItems/').remove(id)
+        })
+    }
+
+    somePromiseMethod() {
+
+        console.log('test');
     }
 
     modifyItem(value, key) {
 
-//        alert(value);
-
+        this.loadingImage = this.loadingController.create({content: '<ion-spinner></ion-spinner>'});
+        this.loadingImage.present();
         this.angularfiredatabase.list('/shoppingItems/').update(key, {value: value}).then(() => {
-
-
-           // alert('수정성공!');
+            this.loadingImage.dismiss();
         });
 
     }

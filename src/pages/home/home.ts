@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {NavController, LoadingController} from 'ionic-angular';
 import {AngularFireDatabase} from 'angularfire2/database'
 import {FirebaseServiceProvider} from "../../providers/firebase-service/firebase-service";
 import {FirebaseListObservable} from "angularfire2/database";
-import { AboutPage} from "../about/about";
+import {DetailPage} from "../detail/detail";
 
 @Component({
     selector: 'page-home',
@@ -14,17 +14,21 @@ export class HomePage {
     shoppingItems: FirebaseListObservable<any[]>;
 
     newItem = '';
+    detailPage = DetailPage;
+    loadingImage : any = this.loadingController.create({content: '<ion-spinner></ion-spinner>'});
 
-    aboutPage = AboutPage;
-
-
-    constructor(public navCtrl: NavController, public fdb: AngularFireDatabase, public firebaseService: FirebaseServiceProvider) {
+    constructor(public navCtrl: NavController, public fdb: AngularFireDatabase
+        , public firebaseService: FirebaseServiceProvider
+        , public loadingController: LoadingController) {
 
         this.shoppingItems = this.firebaseService.getShoppingItems();
+
+        this.loadingImage.present();
+        this.shoppingItems.subscribe(() => this.loadingImage.dismiss())
+
     }
 
     addItem() {
-
         this.firebaseService.addItem(this.newItem)
     }
 
@@ -32,7 +36,7 @@ export class HomePage {
 
         //alert(item.$value);
 
-        this.navCtrl.push(this.aboutPage, {'value':item.value, 'key': item.$key })
+        this.navCtrl.push(this.detailPage, {'value': item.value, 'key': item.$key})
 
     }
 
