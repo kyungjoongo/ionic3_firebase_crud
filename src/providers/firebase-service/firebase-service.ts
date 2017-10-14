@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {AngularFireDatabase} from "angularfire2/database";
-import {NavController} from "ionic-angular";
 
 /*
   Generated class for the FirebaseServiceProvider provider.
@@ -13,7 +12,7 @@ import {NavController} from "ionic-angular";
 @Injectable()
 export class FirebaseServiceProvider {
 
-    constructor(public http: Http, public angularfiredatabase: AngularFireDatabase, public navCtrl: NavController) {
+    constructor(public http: Http, public angularfiredatabase: AngularFireDatabase) {
     }
 
     item;
@@ -46,7 +45,7 @@ export class FirebaseServiceProvider {
         this.angularfiredatabase.list('/shoppingItems/').update(key, {value: value}).then(() => {
 
 
-            alert('수정성공!');
+           // alert('수정성공!');
         });
 
     }
