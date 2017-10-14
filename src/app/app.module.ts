@@ -13,7 +13,7 @@ import {HttpModule} from "@angular/http";
 import {FirebaseServiceProvider} from '../providers/firebase-service/firebase-service';
 import { DetailPage} from "../pages/detail/detail";
 import { AboutPage} from "../pages/about/about";
-import { NavController} from "ionic-angular";
+
 
 
 var config = {
@@ -56,8 +56,7 @@ var config = {
         StatusBar,
         SplashScreen,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
-        FirebaseServiceProvider,
-        NavController
+        FirebaseServiceProvider
 
     ]
 })
