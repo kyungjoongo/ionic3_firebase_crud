@@ -1,18 +1,51 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>To Do List</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+  <ion-row>
+    <ion-col col-9>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+      <ion-item>
+        <ion-input type="text" [(ngModel)]="newItem" placeholder="Add item here"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+      <button  ion-button="" (click)="addItem()">Add Item</button>
+    </ion-col>
+
+  </ion-row>
+
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of shoppingItems | async" (dblclick)="goDetail(item)" >
+
+      <ion-item >
+          <ion-col col-9="">
+              {{ item.value }}
+          </ion-col>
+        <!--  <ion-col>
+
+              {{ item.$key}}
+          </ion-col>-->
+
+
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button="" color="danger"  icon-only="" (click)="removeItem(item.$key)">
+                <ion-icon name="trash"></ion-icon>
+
+        </button>
+
+      </ion-item-options>
+
+    </ion-item-sliding>
+
+  </ion-list>
 </ion-content>
