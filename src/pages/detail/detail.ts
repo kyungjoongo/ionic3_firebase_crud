@@ -12,23 +12,39 @@ import {Events} from 'ionic-angular';
 })
 export class DetailPage {
 
-    key: string;
-    value: string;
+    id: string;
+    content: string;
     loadingImage;
 
     constructor(public navCtrl: NavController,
                 public events: Events,
                 public navParams: NavParams, public httpService: HttpServiceProvider, public loadingController: LoadingController) {
 
-        this.value = (this.navParams.get("value"));
+        this.content = (this.navParams.get("value"));
 
-        this.key = this.navParams.get("key");
+        this.id = this.navParams.get("key");
 
     }
 
-    modifyContent(content, id) {
+    pressModifyBtn() {
 
-        this.httpService.modifyItem(content, id).subscribe(() => {
+
+       this.modify();
+
+    }
+
+
+    pressEnter(code) {
+
+        if (code == 13) {
+
+            this.modify();
+        }
+
+    }
+
+    modify(){
+        this.httpService.modifyItem(this.content, this.id).subscribe(() => {
 
         })
 

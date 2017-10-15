@@ -80,7 +80,7 @@ export class HomePage {
 
     pressEnter(code) {
 
-        if (code == 13) {
+       if (code == 13) {
             this.httpService.addItem(this.content).subscribe(res => {
                 this.getShoppingItems();
             })

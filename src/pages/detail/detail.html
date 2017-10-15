@@ -17,16 +17,16 @@
     <ion-list>
         <ion-item>
 
-            <ion-input type="text"  [(ngModel)]="value"></ion-input>
+            <ion-input type="text"  [(ngModel)]="content" (keypress)="pressEnter($event.keyCode)"></ion-input>
 
         </ion-item>
 
         <ion-item>
-            <ion-label>{{key}}</ion-label>
+            <ion-label>{{id}}</ion-label>
 
         </ion-item>
 
-        <button ion-button="" full="" color="danger"   (click)="modifyContent(value,key)">수정
+        <button ion-button="" full="" color="danger"   (click)="pressModifyBtn()">수정
 
         </button>
 
