@@ -4,6 +4,7 @@ import {AngularFireDatabase} from 'angularfire2/database'
 import {FirebaseServiceProvider} from "../../providers/firebase-service/firebase-service";
 import {FirebaseListObservable} from "angularfire2/database";
 import {DetailPage} from "../detail/detail";
+import {WritePage} from "../write/write";
 
 @Component({
     selector: 'page-home',
@@ -15,6 +16,7 @@ export class HomePage {
 
     newItem = '';
     detailPage = DetailPage;
+    writePage = WritePage;
     loadingImage : any = this.loadingController.create({content: '<ion-spinner></ion-spinner>'});
 
     constructor(public navCtrl: NavController, public fdb: AngularFireDatabase
@@ -30,6 +32,11 @@ export class HomePage {
 
     addItem() {
         this.firebaseService.addItem(this.newItem)
+    }
+
+
+    goWrite() {
+        this.navCtrl.push(this.writePage)
     }
 
     goDetail(item) {

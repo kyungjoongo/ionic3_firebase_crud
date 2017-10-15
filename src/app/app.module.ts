@@ -11,6 +11,7 @@ import {AngularFireModule} from 'angularfire2'
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import {HttpModule} from "@angular/http";
 import {FirebaseServiceProvider} from '../providers/firebase-service/firebase-service';
+import {WritePage} from "../pages/write/write";
 
 import { DetailPage} from "../pages/detail/detail";
 
@@ -29,7 +30,7 @@ var config = {
         MyApp,
         HomePage,
         ListPage,
-        DetailPage
+        DetailPage,WritePage
     ],
     imports: [
         BrowserModule,
@@ -45,7 +46,7 @@ var config = {
         MyApp,
         HomePage,
         ListPage,
-        DetailPage
+        DetailPage,WritePage
 
     ],
     providers: [
