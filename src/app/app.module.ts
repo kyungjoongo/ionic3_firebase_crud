@@ -13,7 +13,8 @@ import {HttpModule} from "@angular/http";
 import {HttpServiceProvider} from '../providers/http-service/http-service';
 import {WritePage} from "../pages/write/write";
 
-import { DetailPage} from "../pages/detail/detail";
+import {DetailPage} from "../pages/detail/detail";
+
 
 var config = {
     apiKey: "AIzaSyDEzvhYyYPy2jRE-J2BweJKST22IKGEHzU",
@@ -30,7 +31,7 @@ var config = {
         MyApp,
         HomePage,
         ListPage,
-        DetailPage,WritePage
+        DetailPage, WritePage
     ],
     imports: [
         BrowserModule,
@@ -40,13 +41,14 @@ var config = {
         HttpModule
 
 
+
     ],
     bootstrap: [IonicApp],
     entryComponents: [
         MyApp,
         HomePage,
         ListPage,
-        DetailPage,WritePage
+        DetailPage, WritePage
 
     ],
     providers: [
@@ -54,6 +56,9 @@ var config = {
         SplashScreen,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         HttpServiceProvider
+
+
+
 
     ]
 })

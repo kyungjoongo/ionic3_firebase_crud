@@ -1,10 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, Renderer2, ViewChild} from '@angular/core';
 import {NavController, LoadingController, NavParams, Events} from 'ionic-angular';
 import {AngularFireDatabase} from 'angularfire2/database'
 import {HttpServiceProvider} from "../../providers/http-service/http-service";
-import {FirebaseListObservable} from "angularfire2/database";
 import {DetailPage} from "../detail/detail";
 import {WritePage} from "../write/write";
+import {Content} from "ionic-angular";
+
 
 @Component({
     selector: 'page-home',
@@ -12,19 +13,22 @@ import {WritePage} from "../write/write";
 })
 export class HomePage {
 
-    shoppingItems = [];
+    @ViewChild(Content) ionicContent: Content;
 
-    newItem = '';
+    toDoListItems = [];
     content = '';
     detailPage = DetailPage;
     writePage = WritePage;
     loadingImage: any;
+    @ViewChild('myInput') myInput;
+
 
     constructor(public navCtrl: NavController, public fdb: AngularFireDatabase
         , public httpService: HttpServiceProvider
         , public navParams: NavParams
         , public loadingController: LoadingController
-        , public events: Events) {
+        , public events: Events
+        ) {
 
 
         this.getShoppingItems();
@@ -43,9 +47,8 @@ export class HomePage {
         this.loadingImage = this.loadingController.create({content: '<ion-spinner></ion-spinner>'});
 
         this.loadingImage.present();
-        return this.httpService.getShoppingItems2().subscribe(jsonResult => {
-
-                this.shoppingItems = jsonResult;
+        return this.httpService.getItems().subscribe(jsonResult => {
+                this.toDoListItems = jsonResult;
 
             },
             error => {
@@ -58,12 +61,33 @@ export class HomePage {
         );
     }
 
+    pressEnter(code) {
+        if (code == 13) {
+            this.writeMemo();
+        }
+
+    }
+
 
     addItem() {
 
+        this.writeMemo();
+
+        this.ionicContent.scrollToTop();
+
+    }
+
+    writeMemo() {
+
         this.httpService.addItem(this.content).subscribe(res => {
             this.getShoppingItems();
+
         })
+        this.content = '';
+        setTimeout(() => {
+            this.myInput.setFocus();
+
+        }, 900);
 
     }
 
@@ -75,17 +99,6 @@ export class HomePage {
         this.httpService.removeItem(id).subscribe(res => {
             this.getShoppingItems();
         })
-    }
-
-
-    pressEnter(code) {
-
-       if (code == 13) {
-            this.httpService.addItem(this.content).subscribe(res => {
-                this.getShoppingItems();
-            })
-        }
-
     }
 
 

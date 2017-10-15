@@ -48,7 +48,7 @@ export class DetailPage {
 
         })
 
-        this.navCtrl.popTo("HomePage", {'status': 'complete'}, hasCompleted => {
+        this.navCtrl.popTo("HomePage",'', hasCompleted => {
 
             this.events.publish('getShoppingItems');
         });

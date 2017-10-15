@@ -7,49 +7,64 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-    <ion-row>
-        <ion-col col-9>
+<ion-content padding  #listScroll>
 
-            <ion-item>
-                <ion-input type="text" [(ngModel)]="content" placeholder="Add item here"  (keypress)="pressEnter($event.keyCode)"></ion-input>
-            </ion-item>
-        </ion-col>
-        <ion-col>
-
-            <button ion-button="" (click)="addItem()">Add Item</button>
-            <!--<button ion-button="" (click)="goWrite()">글쓰기</button>-->
-        </ion-col>
-
-    </ion-row>
 
     <!--<ion-label *ngIf="showSpinner">Loading.....</ion-label>-->
-    <img src="./../../assets/icon/favicon.ico" *ngIf="showSpinner" >
+    <img src="./../../assets/icon/favicon.ico" *ngIf="showSpinner">
     <ion-list>
-        <ion-item-sliding *ngFor="let item of shoppingItems " (dblclick)="goDetail(item)">
-
-            <ion-item>
-                <ion-col col-1>
-
-                    {{ item.id }}
-                </ion-col>
-                <ion-col col-9="">
-                    {{ item.content }}
+        <ion-item-sliding >
 
 
-                </ion-col>
-
-            </ion-item>
-            <ion-item-options side="right">
-                <button ion-button="" color="danger" icon-only="" (click)="removeItem(item.id)">
-                    <ion-icon name="trash"></ion-icon>
-
-                </button>
-
-            </ion-item-options>
 
         </ion-item-sliding>
 
     </ion-list>
 
+    <ion-card *ngFor="let item of toDoListItems " (dblclick)="goDetail(item)">
+        <ion-item>
+            <ion-col col-1>
+
+                {{ item.id }}
+            </ion-col>
+            <ion-col col-9="">
+                {{ item.content }}
+
+
+            </ion-col>
+            <ion-col col-1>
+
+                <button float-right ion-button="" color="danger" icon-only="" (click)="removeItem(item.id)">
+                    <ion-icon name="trash"></ion-icon>
+
+                </button>
+            </ion-col>
+
+        </ion-item>
+
+
+    </ion-card>
+
+
 </ion-content>
+<ion-footer>
+    <ion-row>
+        <ion-col col-10>
+
+            <ion-item>
+                <ion-input #myInput type="text" [(ngModel)]="content" placeholder="Add item here"
+                           (keypress)="pressEnter($event.keyCode)"></ion-input>
+            </ion-item>
+        </ion-col>
+        <ion-col>
+            <button ion-button="" (click)="addItem()" color="yellow">Add Item</button>
+            <!--<button ion-button="" (click)="goWrite()">글쓰기</button>-->
+        </ion-col>
+
+    </ion-row>
+
+</ion-footer>
+
+
+
+

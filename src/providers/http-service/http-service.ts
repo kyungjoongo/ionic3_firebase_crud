@@ -18,16 +18,7 @@ export class HttpServiceProvider {
     loadingImage: any;
     result: any;
 
-
-    getShoppingItems() {
-
-        return this.angularfiredatabase.list('/shoppingItems/');
-
-
-    }
-
-
-    getShoppingItems2() {
+    getItems() {
 
         this.result = this.http.get("http://kyungjoon.ipdisk.co.kr:3000/memo/_list").map(res => {
             return res.json()
