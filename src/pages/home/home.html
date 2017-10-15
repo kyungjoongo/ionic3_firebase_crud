@@ -12,13 +12,13 @@
         <ion-col col-9>
 
             <ion-item>
-                <ion-input type="text" [(ngModel)]="newItem" placeholder="Add item here"></ion-input>
+                <ion-input type="text" [(ngModel)]="content" placeholder="Add item here"  (keypress)="pressEnter($event.keyCode)"></ion-input>
             </ion-item>
         </ion-col>
         <ion-col>
 
             <button ion-button="" (click)="addItem()">Add Item</button>
-            <button ion-button="" (click)="goWrite()">글쓰기</button>
+            <!--<button ion-button="" (click)="goWrite()">글쓰기</button>-->
         </ion-col>
 
     </ion-row>
@@ -26,16 +26,22 @@
     <!--<ion-label *ngIf="showSpinner">Loading.....</ion-label>-->
     <img src="./../../assets/icon/favicon.ico" *ngIf="showSpinner" >
     <ion-list>
-        <ion-item-sliding *ngFor="let item of shoppingItems | async" (dblclick)="goDetail(item)">
+        <ion-item-sliding *ngFor="let item of shoppingItems " (dblclick)="goDetail(item)">
 
             <ion-item>
+                <ion-col col-1>
+
+                    {{ item.id }}
+                </ion-col>
                 <ion-col col-9="">
-                    {{ item.value }}
+                    {{ item.content }}
+
+
                 </ion-col>
 
             </ion-item>
             <ion-item-options side="right">
-                <button ion-button="" color="danger" icon-only="" (click)="removeItem(item.$key)">
+                <button ion-button="" color="danger" icon-only="" (click)="removeItem(item.id)">
                     <ion-icon name="trash"></ion-icon>
 
                 </button>

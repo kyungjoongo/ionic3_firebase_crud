@@ -10,7 +10,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {AngularFireModule} from 'angularfire2'
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import {HttpModule} from "@angular/http";
-import {FirebaseServiceProvider} from '../providers/firebase-service/firebase-service';
+import {HttpServiceProvider} from '../providers/http-service/http-service';
 import {WritePage} from "../pages/write/write";
 
 import { DetailPage} from "../pages/detail/detail";
@@ -53,7 +53,7 @@ var config = {
         StatusBar,
         SplashScreen,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
-        FirebaseServiceProvider
+        HttpServiceProvider
 
     ]
 })

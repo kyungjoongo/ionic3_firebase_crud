@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {FirebaseServiceProvider} from "../../providers/firebase-service/firebase-service";
+import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {HttpServiceProvider} from "../../providers/http-service/http-service";
 /*import {HomePage} from "../home/home";*/
+import {Events} from 'ionic-angular';
 
 
 @IonicPage()
@@ -13,8 +14,11 @@ export class DetailPage {
 
     key: string;
     value: string;
+    loadingImage;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public firebaseService: FirebaseServiceProvider) {
+    constructor(public navCtrl: NavController,
+                public events: Events,
+                public navParams: NavParams, public httpService: HttpServiceProvider, public loadingController: LoadingController) {
 
         this.value = (this.navParams.get("value"));
 
@@ -22,13 +26,16 @@ export class DetailPage {
 
     }
 
-    modifyContent(value, key) {
+    modifyContent(content, id) {
 
-        // alert(value);
+        this.httpService.modifyItem(content, id).subscribe(() => {
 
-        this.firebaseService.modifyItem(value, key)
+        })
 
-        this.navCtrl.popTo("HomePage");
+        this.navCtrl.popTo("HomePage", {'status': 'complete'}, hasCompleted => {
+
+            this.events.publish('getShoppingItems');
+        });
 
     }
 
@@ -36,5 +43,6 @@ export class DetailPage {
     ionViewDidLoad() {
         console.log('ionViewDidLoad AboutPage');
     }
+
 
 }

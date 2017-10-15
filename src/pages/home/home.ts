@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {NavController, LoadingController} from 'ionic-angular';
+import {NavController, LoadingController, NavParams, Events} from 'ionic-angular';
 import {AngularFireDatabase} from 'angularfire2/database'
-import {FirebaseServiceProvider} from "../../providers/firebase-service/firebase-service";
+import {HttpServiceProvider} from "../../providers/http-service/http-service";
 import {FirebaseListObservable} from "angularfire2/database";
 import {DetailPage} from "../detail/detail";
 import {WritePage} from "../write/write";
@@ -12,26 +12,80 @@ import {WritePage} from "../write/write";
 })
 export class HomePage {
 
-    shoppingItems: FirebaseListObservable<any[]>;
+    shoppingItems = [];
 
     newItem = '';
+    content = '';
     detailPage = DetailPage;
     writePage = WritePage;
-    loadingImage : any = this.loadingController.create({content: '<ion-spinner></ion-spinner>'});
+    loadingImage: any;
 
     constructor(public navCtrl: NavController, public fdb: AngularFireDatabase
-        , public firebaseService: FirebaseServiceProvider
-        , public loadingController: LoadingController) {
+        , public httpService: HttpServiceProvider
+        , public navParams: NavParams
+        , public loadingController: LoadingController
+        , public events: Events) {
 
-        this.shoppingItems = this.firebaseService.getShoppingItems();
 
-        this.loadingImage.present();
-        this.shoppingItems.subscribe(() => this.loadingImage.dismiss())
+        this.getShoppingItems();
+
+
+        events.subscribe('getShoppingItems', () => {
+            this.getShoppingItems();
+        });
+
 
     }
 
+
+    getShoppingItems() {
+
+        this.loadingImage = this.loadingController.create({content: '<ion-spinner></ion-spinner>'});
+
+        this.loadingImage.present();
+        return this.httpService.getShoppingItems2().subscribe(jsonResult => {
+
+                this.shoppingItems = jsonResult;
+
+            },
+            error => {
+                alert('http fetch error!');
+            },
+            complete => {
+                console.log('complat fetch')
+                this.loadingImage.dismiss();
+            }
+        );
+    }
+
+
     addItem() {
-        this.firebaseService.addItem(this.newItem)
+
+        this.httpService.addItem(this.content).subscribe(res => {
+            this.getShoppingItems();
+        })
+
+    }
+
+
+    removeItem(id) {
+
+        //      alert(id);
+
+        this.httpService.removeItem(id).subscribe(res => {
+            this.getShoppingItems();
+        })
+    }
+
+
+    pressEnter(code) {
+
+        if (code == 13) {
+            this.httpService.addItem(this.content).subscribe(res => {
+                this.getShoppingItems();
+            })
+        }
+
     }
 
 
@@ -43,13 +97,17 @@ export class HomePage {
 
         //alert(item.$value);
 
-        this.navCtrl.push(this.detailPage, {'value': item.value, 'key': item.$key})
+        this.navCtrl.push(this.detailPage, {
+            'value': item.content, 'key': item.id
+        }, '', hasCompleted => {
 
-    }
 
-    removeItem(id) {
 
-        this.firebaseService.removeItem(id)
+            // alert("sdlfksdlfksldkflksd콜픔리트")
+
+        });
+
+
     }
 
 
