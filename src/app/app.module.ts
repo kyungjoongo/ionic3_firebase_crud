@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {ErrorHandler, NgModule} from '@angular/core';
+import {ErrorHandler, NgModule, Pipe, PipeTransform} from '@angular/core';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 
 import {MyApp} from './app.component';
@@ -14,6 +14,12 @@ import {HttpServiceProvider} from '../providers/http-service/http-service';
 import {WritePage} from "../pages/write/write";
 
 import {DetailPage} from "../pages/detail/detail";
+import {PopoverPage} from "../pages/popover/popover";
+import {Printer} from "@ionic-native/printer";
+import {AboutPage} from "../pages/about/about";
+import {LongPressModule} from "ionic-long-press";
+import { IonicStorageModule } from '@ionic/storage';
+import { PipesModule} from "../pipes/pipes.module";
 
 
 var config = {
@@ -31,14 +37,21 @@ var config = {
         MyApp,
         HomePage,
         ListPage,
-        DetailPage, WritePage
+        DetailPage, WritePage,PopoverPage,AboutPage
     ],
     imports: [
         BrowserModule,
         IonicModule.forRoot(MyApp),
         AngularFireDatabaseModule,
         AngularFireModule.initializeApp(config),
-        HttpModule
+        HttpModule,
+        LongPressModule,
+        IonicStorageModule.forRoot({
+            name: '_mydb3',
+            driverOrder: ['indexeddb', 'sqlite', 'websql']
+        }),
+        PipesModule
+
 
 
 
@@ -48,14 +61,15 @@ var config = {
         MyApp,
         HomePage,
         ListPage,
-        DetailPage, WritePage
+        DetailPage, WritePage,PopoverPage,AboutPage
 
     ],
     providers: [
         StatusBar,
         SplashScreen,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
-        HttpServiceProvider
+        HttpServiceProvider,
+        Printer
 
 
 
