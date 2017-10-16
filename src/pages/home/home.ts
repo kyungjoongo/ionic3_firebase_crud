@@ -1,4 +1,4 @@
-import {Component,  ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {NavController, LoadingController, NavParams, Events, PopoverController} from 'ionic-angular';
 import {DetailPage} from "../detail/detail";
 import {WritePage} from "../write/write";
@@ -7,8 +7,7 @@ import {PopoverPage} from "../popover/popover";
 import {Printer} from "@ionic-native/printer";
 import {Storage} from '@ionic/storage';
 import * as moment from 'moment';
-import { PipesModule} from "../../pipes/pipes.module";
-
+import {PipesModule} from "../../pipes/pipes.module";
 
 @Component({
     selector: 'page-home',
@@ -34,13 +33,13 @@ export class HomePage {
         , public  popoverCtrl: PopoverController) {
         this.checkedValues = [];
 
-        this.getShoppingItems();
+        this.getNoteItems();
 
         /**
          * 다른 ts에서도 쓸수 있도록events.subscribe
          */
         events.subscribe('getShoppingItems', () => {
-            this.getShoppingItems();
+            this.getNoteItems();
         });
 
 
@@ -63,36 +62,49 @@ export class HomePage {
     presentPopover(myEvent) {
 
         let popover = this.popoverCtrl.create(this.popoverPage, {checkedValues: this.checkedValues});
-
-
         popover.present({
             ev: myEvent
         });
     }
 
-    getShoppingItems() {
+
+
+    getNoteItems() {
 
         this.loadingImage = this.loadingController.create({content: '<ion-spinner></ion-spinner>'});
 
         this.loadingImage.present();
         this.toDoListItems.length = 0;
-
+        var toDoListItems3 = new Array();
         this.storage.forEach((value, key, index) => {
-            this.toDoListItems.push({'index': index, 'id': key, 'content': value});
+            toDoListItems3.push({'index': index, 'key': key, 'content': value});
+
+        }).then(() => {
+
+            toDoListItems3.sort((left, right) => {
+                if (left.key > right.key) return -1;
+                if (left.key < right.key) return 1;
+                return 0;
+            });
+
+            toDoListItems3.forEach(element => {
+                this.toDoListItems.push({'index': element.index, 'key': element.key, 'content': element.value});
+            });
+
+            console.log('#########################', toDoListItems3);
+            this.loadingImage.dismiss();
+
         })
-        this.loadingImage.dismiss();
+
+
     }
 
     pressEnter(code) {
         if (code == 13) {
             this.writeMemo();
-
             this.ionicContent.scrollToTop();
         }
-
-
     }
-
 
 
     writeMemo() {
@@ -101,7 +113,7 @@ export class HomePage {
 
         this.storage.set(_guid, this.content).then(() => {
 
-            this.getShoppingItems();
+            this.getNoteItems();
         });
 
 
@@ -117,24 +129,20 @@ export class HomePage {
     removeItem(key) {
 
         this.storage.remove(key).then(() => {
-            this.getShoppingItems();
+            this.getNoteItems();
         });
-
     }
+
+    goDetail(item) {
+
+        this.navCtrl.push(this.detailPage, {'value': item.content, 'key': item.key});
+    }
+
 
 
     goWrite() {
         this.navCtrl.push(this.writePage)
     }
 
-    goDetail(item) {
-
-        this.navCtrl.push(this.detailPage, {'value': item.content, 'key': item.id});
-
-    }
-
-    ionViewWillEnter() {
-        console.log('ionViewDidLoad AboutPage');
-    }
 
 }

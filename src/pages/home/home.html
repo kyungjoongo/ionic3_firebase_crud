@@ -37,7 +37,7 @@
     <ion-list>
 
         <!--<button ion-button="" (click)="pressed2()">pressed2</button>-->
-        <ion-item-sliding *ngFor="let item of toDoListItems | orderBy : ['-id']">
+        <ion-item-sliding *ngFor="let item of toDoListItems ">
 
 
             <!--<button ion-button ion-long-press [interval]="400" (onPressStart)="pressed()" (onPressing)="active()" (onPressEnd)="released()"></button>-->
@@ -46,7 +46,7 @@
 
                 <ion-label>
 
-                        {{item.index }}  {{ item.id }} &nbsp;
+                        {{item.index }}  {{ item.key }} &nbsp;
 
                     {{ item.content }}
                 </ion-label>
@@ -57,7 +57,7 @@
             <ion-item-options side="right">
 
                 <ion-buttons end="" class="bar-buttons bar-buttons-md">
-                    <button ion-button="" icon-only="" color="danger" (click)="removeItem(item.id)">
+                    <button ion-button="" icon-only="" color="danger" (click)="removeItem(item.key)">
                         <ion-icon name="trash"></ion-icon>
                         <div class="button-effect"></div>
 
