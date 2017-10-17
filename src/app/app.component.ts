@@ -48,13 +48,13 @@ export class MyApp {
 
         };
 
-        this.admob.createBanner({
+      /*  this.admob.createBanner({
             adId: admobid.banner,
             isTesting: false,
             autoShow: true,
             position: this.admob.AD_POSITION.BOTTOM_CENTER
         })
-
+*/
         this.admob.prepareInterstitial({
             adId: admobid.interstitial,
             isTesting: false,
