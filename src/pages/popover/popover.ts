@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Events, NavController, NavParams, ViewController} from 'ionic-angular';
+import {AlertController, Events, NavController, NavParams, ViewController} from 'ionic-angular';
 import {Printer} from "@ionic-native/printer";
 import {HttpServiceProvider} from "../../providers/http-service/http-service";
 
@@ -21,7 +21,7 @@ export class PopoverPage {
     constructor(public navCtrl: NavController, public navParams: NavParams
         , public printer: Printer
         , public httpService: HttpServiceProvider
-        , public events: Events
+        , public events: Events,public alertCtrl: AlertController
         , public viewCtrl: ViewController) {
 
         var _checkedValues = this.navParams.get("checkedValues")
@@ -71,17 +71,44 @@ export class PopoverPage {
     deleteItems() {
 
         this.httpService.removeItem(this.checkedValues).subscribe(() => {
-
             this.close();
-
             this.checkedValues=[];
-
             this.events.publish('getShoppingItems');
-
-
         })
+    }
+
+    deleteAllItems() {
+
+        //alert('sdlfksdlfk');
 
 
+        /*this.events.publish('clearLocalStorage');
+        this.close();*/
+
+        const alert = this.alertCtrl.create({
+            title: 'Confirm ',
+            message: 'Do you want to delete all notes?',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => {
+                        console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'Ok',
+                    handler: () => {
+                        this.events.publish('clearLocalStorage');
+
+                        console.log('Ok clicked');
+                    }
+                }
+            ]
+        });
+        alert.present();
+
+        this.close();
 
     }
 }

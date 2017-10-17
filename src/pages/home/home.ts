@@ -1,5 +1,5 @@
-import {Component, ViewChild} from '@angular/core';
-import {NavController, LoadingController, NavParams, Events, PopoverController} from 'ionic-angular';
+import {Component, HostBinding, ViewChild} from '@angular/core';
+import {NavController, LoadingController, NavParams, Events, PopoverController, AlertController} from 'ionic-angular';
 import {DetailPage} from "../detail/detail";
 import {WritePage} from "../write/write";
 import {Content} from "ionic-angular";
@@ -7,13 +7,14 @@ import {PopoverPage} from "../popover/popover";
 import {Printer} from "@ionic-native/printer";
 import {Storage} from '@ionic/storage';
 import * as moment from 'moment';
-import {PipesModule} from "../../pipes/pipes.module";
 
 @Component({
     selector: 'page-home',
     templateUrl: 'home.html'
 })
 export class HomePage {
+
+    @HostBinding('style.font-family') fontFamily: string;
 
     @ViewChild(Content) ionicContent: Content;
     @ViewChild('myInput') myInput;
@@ -25,11 +26,13 @@ export class HomePage {
     checkedValues = [];
     loadingImage: any;
 
+
     constructor(public navCtrl: NavController
         , public loadingController: LoadingController
         , public events: Events
         , public printer: Printer
         , private storage: Storage
+        , public alertCtrl: AlertController
         , public  popoverCtrl: PopoverController) {
         this.checkedValues = [];
 
@@ -43,6 +46,26 @@ export class HomePage {
         });
 
 
+        events.subscribe('clearLocalStorage', () => {
+            this.clearLocalStorage();
+        });
+
+
+        events.subscribe('changeFontFamily', (response) => {
+
+           /* alert(response.fontName+ "eventsldkflsdkflksdflksdf========>");*/
+
+            this.changeFontFamily(response.fontName);
+        });
+
+
+    }
+
+
+
+    changeFontFamily(fontName) {
+
+        this.fontFamily = fontName;
     }
 
     getGuid() {
@@ -68,7 +91,6 @@ export class HomePage {
     }
 
 
-
     getNoteItems() {
 
         this.loadingImage = this.loadingController.create({content: '<ion-spinner></ion-spinner>'});
@@ -88,14 +110,19 @@ export class HomePage {
             });
 
             toDoListItems3.forEach(element => {
-                this.toDoListItems.push({'index': element.index, 'key': element.key, 'content': element.value});
+                this.toDoListItems.push({'index': element.index, 'key': element.key, 'content': element.content});
             });
 
-            console.log('#########################', toDoListItems3);
+            //console.log('#########################', toDoListItems3);
             this.loadingImage.dismiss();
-
         })
+    }
 
+    clearLocalStorage() {
+        console.log('클리어3333333333333333333333333333333333333333!')
+        this.storage.clear().then(() => {
+            this.getNoteItems();
+        })
 
     }
 
@@ -137,7 +164,6 @@ export class HomePage {
 
         this.navCtrl.push(this.detailPage, {'value': item.content, 'key': item.key});
     }
-
 
 
     goWrite() {

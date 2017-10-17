@@ -74,19 +74,25 @@ $colors: (
 @import url(http://fonts.googleapis.com/earlyaccess/nanumpenscript.css);
 @import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
-ion-content {
-    /*font-family: 'Hanna', serif;*/
+@import url('https://fonts.googleapis.com/css?family=Modak');
 
+ion-content {
     font-family: 'Nanum Gothic', serif;
 }
 
 html {
 
-    font-size: 10px !important;
-    /*font-family: 'Hanna', serif;*/
-    font-family: 'Nanum Gothic', serif;
+   /* font-size: 10px !important;
+    !*font-family: 'Hanna', serif;*!
+    font-family: 'Nanum Gothic', serif;*/
 
 }
+
+.hana{
+    font-family: 'Hanna', serif !important;
+}
+
+
 
 /*$font-family-base :'Nanum Pen Script', serif !default;
 */
@@ -94,8 +100,23 @@ html {
 
 
 
+/*
+
+
+.odd {
+    background-color: #f2f9ff;
+
+}
+.even {
+    background-color: #eceff3;
+}
+*/
+
+ion-toolbar{
 
 
 
+    display: flex;
+}
 
 

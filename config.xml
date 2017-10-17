@@ -88,4 +88,5 @@
     <plugin name="de.appplant.cordova.plugin.printer" spec="~0.7.1" />
     <allow-navigation href="http://192.168.0.2:8102" />
     <plugin name="cordova-sqlite-storage" spec="~2.0.4" />
+    <plugin name="cordova-plugin-admobpro" spec="~2.29.24" />
 </widget>

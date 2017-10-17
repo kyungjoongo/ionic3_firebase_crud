@@ -6,6 +6,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import {AboutPage} from "../pages/about/about";
+import {SettingPage} from "../pages/setting/setting";
+import { AdMobPro} from "@ionic-native/admob-pro";
 
 @Component({
   templateUrl: 'app.html'
@@ -17,13 +19,14 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private admob : AdMobPro) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Note', component: HomePage }
       ,{ title: 'About', component: AboutPage }
+/*        ,{ title: 'Setting', component: SettingPage }*/
 
 
     ];
@@ -38,6 +41,25 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+        var admobid = {
+            interstitial: 'ca-app-pub-6826082357124500/9307296734',
+            banner: 'ca-app-pub-6826082357124500/7593091515'
+
+        };
+
+        this.admob.createBanner({
+            adId: admobid.banner,
+            isTesting: false,
+            autoShow: true,
+            position: this.admob.AD_POSITION.BOTTOM_CENTER
+        })
+
+        this.admob.prepareInterstitial({
+            adId: admobid.interstitial,
+            isTesting: false,
+            autoShow: true
+        })
     });
   }
 

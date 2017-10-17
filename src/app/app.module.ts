@@ -20,6 +20,8 @@ import {AboutPage} from "../pages/about/about";
 import {LongPressModule} from "ionic-long-press";
 import { IonicStorageModule } from '@ionic/storage';
 import { PipesModule} from "../pipes/pipes.module";
+import { SettingPage} from "../pages/setting/setting";
+import { AdMobPro} from "@ionic-native/admob-pro";
 
 
 var config = {
@@ -37,7 +39,7 @@ var config = {
         MyApp,
         HomePage,
         ListPage,
-        DetailPage, WritePage,PopoverPage,AboutPage
+        DetailPage, WritePage,PopoverPage,AboutPage,SettingPage
     ],
     imports: [
         BrowserModule,
@@ -61,7 +63,7 @@ var config = {
         MyApp,
         HomePage,
         ListPage,
-        DetailPage, WritePage,PopoverPage,AboutPage
+        DetailPage, WritePage,PopoverPage,AboutPage,SettingPage
 
     ],
     providers: [
@@ -69,7 +71,8 @@ var config = {
         SplashScreen,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         HttpServiceProvider,
-        Printer
+        Printer,
+        AdMobPro
 
 
 
